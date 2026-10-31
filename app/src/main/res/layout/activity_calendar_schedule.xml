@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="12dp">
 
+    <!-- Thanh chọn chế độ xem Ngày / Tuần / Tháng -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,8 +26,8 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
             android:layout_weight="1"
             android:text="Weekly" />
 
@@ -39,6 +40,30 @@
             android:text="Monthly" />
     </LinearLayout>
 
+    <!-- Nút đồng bộ nhắc lịch sắp đến & Đặt lịch cho ngày đang chọn -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnSyncReminders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Remind Upcoming" />
+
+        <Button
+            android:id="@+id/btnBookOnSelectedDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/accent"
+            android:text="+ Book This Date" />
+    </LinearLayout>
+
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
@@ -49,11 +74,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:text="Daily Schedule"
+        android:layout_marginBottom="4dp"
+        android:text="Daily Schedule (Tap item for details &amp; reminder)"
         android:textColor="@color/primary_dark"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEmptyCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="No study sessions found in this period."
+        android:textColor="#666666"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCalendarSchedules"
