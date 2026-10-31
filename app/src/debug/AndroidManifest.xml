@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
+        <activity android:name=".activities.StudentModuleDemoActivity"
+            android:exported="true" android:label="Sinh viên · Module 2"
+            android:theme="@style/Theme.StudentModule"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <!-- Chỉ có trong debug, chạy bằng cấu hình Module 3 - Test. -->
         <activity
             android:name=".activities.SubjectDebugActivity"

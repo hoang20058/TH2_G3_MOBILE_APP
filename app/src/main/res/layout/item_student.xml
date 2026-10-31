@@ -1,57 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-
-        <TextView
-            android:id="@+id/tvStudentCodeAndName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SE17001 - Nguyen Van An"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvStudentContact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Email: annv@fpt.edu.vn | Phone: 0901234567"
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnEditStudent"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit" />
-
-            <Button
-                android:id="@+id/btnDeleteStudent"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Delete"
-                android:textColor="@color/status_cancelled" />
-        </LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="108dp" android:layout_marginBottom="10dp" android:background="@drawable/student_card_bg" android:foreground="?attr/selectableItemBackground" android:gravity="center_vertical" android:padding="12dp" android:clickable="true" android:focusable="true">
+    <TextView android:id="@+id/tvStudentAvatar" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/student_avatar_bg" android:gravity="center" android:textColor="#8058E8" android:textSize="19sp" android:fontFamily="sans-serif-medium" android:importantForAccessibility="no"/>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:orientation="vertical">
+        <TextView android:id="@+id/tvStudentCodeAndName" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/student_navy" android:textSize="14sp" android:fontFamily="sans-serif-medium" android:maxLines="2" android:ellipsize="end"/>
+        <TextView android:id="@+id/tvStudentCode" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="@color/student_muted" android:textSize="12sp" android:maxLines="1" android:ellipsize="end"/>
+        <TextView android:id="@+id/tvStudentContact" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:textColor="@color/student_muted" android:textSize="11sp" android:maxLines="1" android:ellipsize="end"/>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+    <LinearLayout android:layout_width="48dp" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="4dp">
+        <androidx.appcompat.widget.AppCompatImageButton android:id="@+id/btnEditStudent" android:layout_width="48dp" android:layout_height="48dp" android:padding="14dp" android:background="@drawable/student_edit_bg" android:src="@drawable/student_ic_edit" android:tint="#2478F5" android:contentDescription="Sửa sinh viên"/>
+        <androidx.appcompat.widget.AppCompatImageButton android:id="@+id/btnDeleteStudent" android:layout_width="48dp" android:layout_height="48dp" android:layout_marginTop="4dp" android:padding="14dp" android:background="@drawable/student_delete_bg" android:src="@drawable/student_ic_delete" android:tint="#F13F64" android:contentDescription="Xóa sinh viên"/>
+    </LinearLayout>
+</LinearLayout>
