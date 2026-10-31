@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edtDialogSubjectCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Subject Code (e.g. PRM392)" />
+
+    <EditText
+        android:id="@+id/edtDialogSubjectName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Subject Name" />
+
+    <EditText
+        android:id="@+id/edtDialogSubjectDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Description" />
+
+    <EditText
+        android:id="@+id/edtDialogCredits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Credits (e.g. 3)"
+        android:inputType="number" />
+
+</LinearLayout>
