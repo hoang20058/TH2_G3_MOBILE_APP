@@ -1,6 +1,9 @@
 package com.example.studyschedule.dal;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import com.example.studyschedule.models.Student;
 
 import java.util.ArrayList;
@@ -19,7 +22,21 @@ public class StudentDAO {
     }
 
     public Student getStudentByAccountId(int accountId) {
-        // TODO (Người 1 / Người 2): Lấy thông tin Student theo accountId
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        try (Cursor cursor = db.query(DBHelper.TABLE_STUDENT, null,
+                DBHelper.COL_STU_ACCOUNT_ID + " = ?", new String[]{String.valueOf(accountId)},
+                null, null, null)) {
+            if (cursor.moveToFirst()) {
+                return new Student(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_CODE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_FULLNAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_EMAIL)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_PHONE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_ACCOUNT_ID))
+                );
+            }
+        }
         return null;
     }
 
