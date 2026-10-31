@@ -25,37 +25,37 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-            android:label="Study Schedule Home" />
+            android:exported="true"
+            android:label="Study Planner" />
 
         <!-- Người 2: Student Management (Admin) -->
         <activity
             android:name=".activities.StudentManagementActivity"
-            android:exported="false"
-            android:label="Student Management" />
+            android:exported="true"
+            android:label="Quản lý sinh viên" />
 
         <!-- Người 3: Subject Management (Admin) -->
         <activity
             android:name=".activities.SubjectManagementActivity"
-            android:exported="false"
-            android:label="Subject Management" />
+            android:exported="true"
+            android:label="Quản lý môn học" />
 
         <!-- Người 4: Study Schedule Management & Booking (Student) -->
         <activity
             android:name=".activities.ScheduleListActivity"
-            android:exported="false"
-            android:label="My Study Schedules" />
+            android:exported="true"
+            android:label="Lịch đã đặt" />
 
         <activity
             android:name=".activities.ScheduleBookingActivity"
-            android:exported="false"
-            android:label="Book / Edit Study Session" />
+            android:exported="true"
+            android:label="Đặt lịch học" />
 
         <!-- Người 5: Calendar View & Notifications (Student) -->
         <activity
             android:name=".activities.CalendarScheduleActivity"
-            android:exported="false"
-            android:label="Study Calendar &amp; Reminders" />
+            android:exported="true"
+            android:label="Lịch học của tôi" />
 
         <receiver
             android:name=".utils.ScheduleAlarmReceiver"

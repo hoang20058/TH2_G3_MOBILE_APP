@@ -7,18 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.studyschedule.utils.Constants;
 
 /**
- * DBHelper theo đúng cấu trúc chuẩn của đề thi:
- * com.example.studyschedule
- * ├── activities
- * ├── dal
- * │   └── DBHelper.java
- * ├── models
- * └── MainActivity.java
+ * DBHelper chuẩn theo cấu trúc đề thi Test 2 (SQLite) & nạp sẵn dữ liệu mẫu khớp với thiết kế UI của nhóm.
  */
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "StudyScheduleManagement.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     // 1. Table Account(id, username, password, role)
     public static final String TABLE_ACCOUNT = "Account";
@@ -118,31 +112,41 @@ public class DBHelper extends SQLiteOpenHelper {
         seedInitialData(db);
     }
 
+    /**
+     * Dữ liệu mẫu khớp 100% với bản thiết kế giao diện STUDY PLANNER của nhóm:
+     * - Sinh viên: SV001 (Nguyễn Minh Anh), SV002 (Trần Hoàng Nam), SV003 (Lê Thu Hà)
+     * - Môn học: INT1306 (Cơ sở dữ liệu), INT1310 (Lập trình Java), INT1313 (Mạng máy tính)
+     * - Lịch học: 05/11/2026 (08:00 - 09:30, Cơ sở dữ liệu, Thư viện A2, Confirmed)
+     *             06/11/2026 (14:00 - 15:30, Lập trình Java, Thư viện A2, Pending)
+     */
     private void seedInitialData(SQLiteDatabase db) {
-        // 1. Seed Accounts (admin/123, sv01/123, sv02/123)
+        // 1. Seed Accounts
         db.execSQL("INSERT INTO " + TABLE_ACCOUNT + " (username, password, role) VALUES ('admin', '123', '" + Constants.ROLE_ADMIN + "')");
         db.execSQL("INSERT INTO " + TABLE_ACCOUNT + " (username, password, role) VALUES ('sv01', '123', '" + Constants.ROLE_STUDENT + "')");
         db.execSQL("INSERT INTO " + TABLE_ACCOUNT + " (username, password, role) VALUES ('sv02', '123', '" + Constants.ROLE_STUDENT + "')");
+        db.execSQL("INSERT INTO " + TABLE_ACCOUNT + " (username, password, role) VALUES ('sv03', '123', '" + Constants.ROLE_STUDENT + "')");
 
         // 2. Seed Students
         db.execSQL("INSERT INTO " + TABLE_STUDENT + " (studentCode, fullname, email, phone, accountId) "
-                + "VALUES ('SE17001', 'Nguyen Van An', 'annv@fpt.edu.vn', '0901234567', 2)");
+                + "VALUES ('SV001', 'Nguyễn Minh Anh', 'minhanh@example.com', '0901234567', 2)");
         db.execSQL("INSERT INTO " + TABLE_STUDENT + " (studentCode, fullname, email, phone, accountId) "
-                + "VALUES ('SE17002', 'Tran Thi Binh', 'binhtt@fpt.edu.vn', '0912345678', 3)");
+                + "VALUES ('SV002', 'Trần Hoàng Nam', 'hoangnam@example.com', '0912345678', 3)");
+        db.execSQL("INSERT INTO " + TABLE_STUDENT + " (studentCode, fullname, email, phone, accountId) "
+                + "VALUES ('SV003', 'Lê Thu Hà', 'thuha@example.com', '0923456789', 4)");
 
         // 3. Seed Subjects
         db.execSQL("INSERT INTO " + TABLE_SUBJECT + " (subjectCode, subjectName, description, credits) "
-                + "VALUES ('PRM392', 'Mobile Programming', 'Android Application Development with Java', 3)");
+                + "VALUES ('INT1306', 'Cơ sở dữ liệu', 'Hệ quản trị cơ sở dữ liệu SQL', 3)");
         db.execSQL("INSERT INTO " + TABLE_SUBJECT + " (subjectCode, subjectName, description, credits) "
-                + "VALUES ('SWD392', 'Software Architecture & Design', 'Architecture patterns and system design', 3)");
+                + "VALUES ('INT1310', 'Lập trình Java', 'Lập trình hướng đối tượng với Java', 3)");
         db.execSQL("INSERT INTO " + TABLE_SUBJECT + " (subjectCode, subjectName, description, credits) "
-                + "VALUES ('PRN211', 'Cross-Platform .NET', 'C# and .NET Application Development', 3)");
+                + "VALUES ('INT1313', 'Mạng máy tính', 'Kiến trúc và giao thức mạng máy tính', 3)");
 
-        // 4. Seed Sample StudySchedules
+        // 4. Seed StudySchedules (cho SV001 - studentId = 1)
         db.execSQL("INSERT INTO " + TABLE_SCHEDULE + " (studentId, subjectId, studyDate, startTime, endTime, location, status) "
-                + "VALUES (1, 1, '2026-10-31', '08:00', '10:00', 'Room BE-301', '" + Constants.STATUS_CONFIRMED + "')");
+                + "VALUES (1, 1, '2026-11-05', '08:00', '09:30', 'Thư viện A2', '" + Constants.STATUS_CONFIRMED + "')");
         db.execSQL("INSERT INTO " + TABLE_SCHEDULE + " (studentId, subjectId, studyDate, startTime, endTime, location, status) "
-                + "VALUES (1, 2, '2026-11-01', '13:30', '15:30', 'Library Study Pod 2', '" + Constants.STATUS_PENDING + "')");
+                + "VALUES (1, 2, '2026-11-06', '14:00', '15:30', 'Thư viện A2', '" + Constants.STATUS_PENDING + "')");
     }
 
     @Override
