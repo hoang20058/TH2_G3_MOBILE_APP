@@ -1,71 +1,22 @@
 package com.example.studyschedule.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.studyschedule.R;
-import com.example.studyschedule.adapters.ScheduleAdapter;
-import com.example.studyschedule.dal.StudyScheduleDAO;
-import com.example.studyschedule.models.StudySchedule;
-import com.example.studyschedule.utils.SessionManager;
-
-import java.util.List;
 
 /**
- * ScheduleListActivity (Người 4 - feature/study-schedule).
+ * ScheduleListActivity (Người 4 - nhánh feature/study-schedule).
+ * TODO (Người 4):
+ * - Hiển thị danh sách lịch học cá nhân của Student
+ * - Tìm kiếm, sửa, xóa lịch học
+ * - Quản lý đổi trạng thái Pending / Confirmed / Cancelled
  */
 public class ScheduleListActivity extends AppCompatActivity {
-
-    private EditText edtSearchSchedule;
-    private Button btnSearchSchedule, btnGoToBookSchedule;
-    private RecyclerView rvSchedules;
-    private StudyScheduleDAO scheduleDAO;
-    private SessionManager sessionManager;
-    private ScheduleAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_list);
-
-        scheduleDAO = new StudyScheduleDAO(this);
-        sessionManager = new SessionManager(this);
-
-        edtSearchSchedule = findViewById(R.id.edtSearchSchedule);
-        btnSearchSchedule = findViewById(R.id.btnSearchSchedule);
-        btnGoToBookSchedule = findViewById(R.id.btnGoToBookSchedule);
-        rvSchedules = findViewById(R.id.rvSchedules);
-
-        rvSchedules.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ScheduleAdapter();
-        rvSchedules.setAdapter(adapter);
-
-        btnSearchSchedule.setOnClickListener(v -> {
-            String keyword = edtSearchSchedule.getText().toString().trim();
-            loadSchedules(keyword);
-        });
-
-        btnGoToBookSchedule.setOnClickListener(v ->
-                startActivity(new Intent(this, ScheduleBookingActivity.class)));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadSchedules(edtSearchSchedule.getText().toString().trim());
-    }
-
-    private void loadSchedules(String keyword) {
-        int studentId = sessionManager.getStudentId();
-        List<StudySchedule> list = keyword.isEmpty()
-                ? scheduleDAO.getSchedulesByStudent(studentId)
-                : scheduleDAO.searchSchedules(studentId, keyword);
-        adapter.setScheduleList(list);
+        // TODO (Người 4): Code chức năng danh sách lịch học cá nhân tại đây
     }
 }
