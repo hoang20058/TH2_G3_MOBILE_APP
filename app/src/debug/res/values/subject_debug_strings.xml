@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="subject_debug_title">Môn học — Test module 3</string>
+    <string name="subject_debug_notice">Test module 3: phiên Admin riêng, dữ liệu SQLite thật.</string>
+    <string name="subject_debug_no_admin">Không tìm thấy tài khoản Admin trong database để chạy thử.</string>
+</resources>

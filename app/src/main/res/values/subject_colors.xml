@@ -1,0 +1,7 @@
+<resources>
+    <color name="subject_navy">#101F4D</color>
+    <color name="subject_background">#FCFCFE</color>
+    <color name="subject_pink">#FFE5EE</color>
+    <color name="subject_muted">#637394</color>
+    <color name="subject_accent">#EF3971</color>
+</resources>

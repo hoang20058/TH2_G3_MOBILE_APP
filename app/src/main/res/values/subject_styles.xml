@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SubjectFormDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorPrimary">@color/subject_navy</item>
+        <item name="colorSecondary">@color/subject_accent</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="colorOnSurface">@color/subject_navy</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="android:textColorPrimary">@color/subject_navy</item>
+        <item name="shapeAppearanceOverlay">@style/SubjectFormDialogShape</item>
+        <item name="buttonBarPositiveButtonStyle">@style/SubjectFormSaveButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/SubjectFormCancelButton</item>
+    </style>
+
+    <style name="SubjectFormDialogShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <style name="SubjectFormSaveButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/subject_navy</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <style name="SubjectFormCancelButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/subject_navy</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="strokeColor">@color/subject_field_stroke</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <style name="SubjectFormField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">#FAFBFE</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="boxStrokeColor">@color/subject_field_stroke</item>
+        <item name="hintTextColor">@color/subject_navy</item>
+        <item name="android:textColorHint">@color/subject_muted</item>
+        <item name="helperTextTextColor">@color/subject_muted</item>
+    </style>
+
+    <style name="SubjectFormInput">
+        <item name="android:textColor">@color/subject_navy</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+    </style>
+</resources>
