@@ -1,0 +1,47 @@
+
+<resources>
+    <color name="student_navy">#142452</color>
+    <color name="student_muted">#6F7F9F</color>
+    <color name="student_pink">#ED3D78</color>
+    <color name="student_blush">#FFF0F5</color>
+    <color name="student_surface">#FAFBFE</color>
+    <color name="student_border">#E6EAF2</color>
+    <style name="Theme.StudentModule" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/student_navy</item>
+        <item name="colorPrimaryVariant">@color/student_navy</item>
+        <item name="colorSecondary">@color/student_pink</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowBackground">@color/student_surface</item>
+        <item name="android:colorAccent">@color/student_pink</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.StudentDialog</item>
+        <item name="android:textColorPrimary">@color/student_navy</item>
+    </style>
+    <style name="ThemeOverlay.StudentDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:textColorPrimary">@color/student_navy</item>
+        <item name="colorPrimary">@color/student_navy</item>
+        <item name="colorSecondary">@color/student_pink</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.StudentDialog</item>
+    </style>
+    <style name="ShapeAppearance.StudentDialog" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+    <style name="StudentField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+    </style>
+    <string name="student_search_hint">Tìm mã hoặc tên sinh viên</string>
+    <string name="student_count">%1$d sinh viên</string>
+    <string name="student_result_count">%1$d kết quả</string>
+    <string name="student_edit_action">Sửa %1$s</string>
+    <string name="student_delete_action">Xóa %1$s</string>
+</resources>
