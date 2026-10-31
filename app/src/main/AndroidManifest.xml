@@ -16,12 +16,7 @@
         <!-- Người 1: Login & MainActivity -->
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
 
         <activity
             android:name=".MainActivity"
@@ -49,7 +44,12 @@
         <activity
             android:name=".activities.ScheduleBookingActivity"
             android:exported="true"
-            android:label="Đặt lịch học" />
+            android:label="Đặt lịch học">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- Người 5: Calendar View & Notifications (Student) -->
         <activity

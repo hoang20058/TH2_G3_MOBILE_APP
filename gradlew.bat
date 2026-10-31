@@ -51,7 +51,11 @@ echo. 1>&2
 echo Please set the JAVA_HOME variable in your environment to match the 1>&2
 echo location of your Java installation. 1>&2
 
+<<<<<<< HEAD
 "%COMSPEC%" /c exit 1
+=======
+goto fail
+>>>>>>> origin/main
 
 :findJavaFromJavaHome
 set JAVA_HOME=%JAVA_HOME:"=%
@@ -65,17 +69,29 @@ echo. 1>&2
 echo Please set the JAVA_HOME variable in your environment to match the 1>&2
 echo location of your Java installation. 1>&2
 
+<<<<<<< HEAD
 "%COMSPEC%" /c exit 1
+=======
+goto fail
+>>>>>>> origin/main
 
 :execute
 @rem Setup the command line
 
+<<<<<<< HEAD
 
 
 @rem Execute gradlew
 @rem endlocal doesn't take effect until after the line is parsed and variables are expanded
 @rem which allows us to clear the local environment before executing the java command
 endlocal & "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -jar "%APP_HOME%\gradle\wrapper\gradle-wrapper.jar" %* & call :exitWithErrorLevel
+=======
+set CLASSPATH=
+
+
+@rem Execute Gradle
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" -jar "%APP_HOME%\gradle\wrapper\gradle-wrapper.jar" %*
+>>>>>>> origin/main
 
 :exitWithErrorLevel
 @rem Use "%COMSPEC%" /c exit to allow operators to work properly in scripts

@@ -1,77 +1,392 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light"
-    android:padding="16dp">
+    android:background="#FCFCFF"
+    android:orientation="vertical"
+    tools:context=".activities.ScheduleBookingActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Subject:"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spnSubject"
-            android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingHorizontal="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/btnBookingMenu"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginBottom="12dp" />
-
-        <EditText
-            android:id="@+id/edtStudyDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Study Date (yyyy-MM-dd, e.g. 2026-11-05)"
-            android:inputType="date" />
-
-        <EditText
-            android:id="@+id/edtStartTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Start Time (HH:mm 24h, e.g. 08:30)"
-            android:inputType="time" />
-
-        <EditText
-            android:id="@+id/edtEndTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="End Time (HH:mm 24h, e.g. 10:30)"
-            android:inputType="time" />
-
-        <EditText
-            android:id="@+id/edtLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Study Location (e.g. Room BE-301 / Library)"
-            android:inputType="text" />
-
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Mở menu"
+            android:padding="12dp"
+            android:src="@android:drawable/ic_menu_sort_by_size"
+            android:tint="#192653" />
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvBookingTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Booking Status:"
+            android:layout_weight="1"
+            android:paddingStart="4dp"
+            android:paddingEnd="0dp"
+            android:text="Đặt lịch học"
+            android:textColor="#192653"
+            android:textSize="21sp"
             android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spnStatus"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btnBookingProfile"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginBottom="20dp" />
-
-        <Button
-            android:id="@+id/btnSaveSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="14dp"
-            android:text="SAVE STUDY SESSION" />
-
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Cá nhân"
+            android:padding="12dp"
+            android:src="@android:drawable/ic_menu_myplaces"
+            android:tint="#192653" />
     </LinearLayout>
-</ScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/bookingScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingHorizontal="18dp"
+        android:paddingBottom="16dp"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/bookingBanner"
+                android:layout_width="match_parent"
+                android:layout_height="104dp"
+                android:layout_marginTop="6dp"
+                android:background="#FFE6EF">
+                <ImageView
+                    android:id="@+id/imgBookingBanner"
+                    android:layout_width="194dp"
+                    android:layout_height="104dp"
+                    android:layout_gravity="end|bottom"
+                    android:importantForAccessibility="no"
+                    tools:src="@android:drawable/ic_menu_my_calendar" />
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="5dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="0dp"
+                    android:text="Chủ động\nthời gian học tập"
+                    android:textColor="#91244F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="5dp"
+                android:labelFor="@id/spnSubject"
+                android:text="Môn học"
+                android:textColor="#192653"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/fieldSubject"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp">
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:importantForAccessibility="no"
+                    android:src="@android:drawable/ic_menu_search"
+                    android:tint="#526583" />
+                <Spinner
+                    android:id="@+id/spnSubject"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:spinnerMode="dropdown" />
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
+                    android:text="⌄"
+                    android:textColor="#526583"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:labelFor="@id/edtStudyDate"
+                android:text="Ngày học"
+                android:textColor="#192653"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/edtStudyDate"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:drawableStart="@android:drawable/ic_menu_my_calendar"
+                android:drawablePadding="10dp"
+                android:drawableTint="#526583"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:textColor="#192653"
+                android:textSize="14sp"
+                tools:text="05/11/2026" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:labelFor="@id/edtStartTime"
+                        android:text="Bắt đầu"
+                        android:textColor="#192653"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/edtStartTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:drawableStart="@android:drawable/ic_menu_recent_history"
+                        android:drawableEnd="@android:drawable/arrow_down_float"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="#526583"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="10dp"
+                        android:textColor="#192653"
+                        android:textSize="14sp"
+                        tools:text="08:00" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:labelFor="@id/edtEndTime"
+                        android:text="Kết thúc"
+                        android:textColor="#192653"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/edtEndTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:drawableStart="@android:drawable/ic_menu_recent_history"
+                        android:drawableEnd="@android:drawable/arrow_down_float"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="#526583"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="10dp"
+                        android:textColor="#192653"
+                        android:textSize="14sp"
+                        tools:text="09:30" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:labelFor="@id/edtLocation"
+                android:text="Địa điểm"
+                android:textColor="#192653"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <AutoCompleteTextView
+                android:id="@+id/edtLocation"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:completionThreshold="1"
+                android:drawableStart="@android:drawable/ic_menu_mylocation"
+                android:drawableEnd="@android:drawable/arrow_down_float"
+                android:drawablePadding="10dp"
+                android:drawableTint="#526583"
+                android:hint="Chọn hoặc nhập địa điểm"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences"
+                android:maxLength="120"
+                android:paddingHorizontal="12dp"
+                android:singleLine="true"
+                android:textColor="#192653"
+                android:textColorHint="#78849B"
+                android:textSize="14sp"
+                tools:text="Thư viện A2" />
+
+            <TextView
+                android:id="@+id/tvAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:accessibilityLiveRegion="polite"
+                android:text="✓  Khung giờ còn trống"
+                android:textColor="#249B45"
+                android:textSize="13sp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSaveSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:backgroundTint="#192653"
+                android:text="Đặt lịch"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/btnCancelEditing"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="Hủy chỉnh sửa"
+                android:textColor="#78849B"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Lịch đã đặt"
+                    android:textColor="#192653"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/btnViewAllSchedules"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:minWidth="80dp"
+                    android:text="Xem tất cả"
+                    android:textColor="#477DFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvEmptySchedules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="Chưa có lịch học. Hãy đặt lịch đầu tiên của bạn!"
+                android:textColor="#78849B"
+                android:visibility="gone" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBookedSchedules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_schedule" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="#FFFFFF"
+        android:elevation="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp">
+        <TextView
+            android:id="@+id/navBookingSchedules"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:drawableTop="@android:drawable/ic_menu_my_calendar"
+            android:drawableTint="#78849B"
+            android:gravity="center"
+            android:paddingVertical="5dp"
+            android:text="Lịch học"
+            android:textColor="#78849B"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/navBookingCurrent"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:drawableTop="@android:drawable/ic_input_add"
+            android:drawableTint="#F32E78"
+            android:gravity="center"
+            android:paddingVertical="5dp"
+            android:text="Đặt lịch"
+            android:textColor="#F32E78"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/navBookingNotifications"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:drawableTop="@android:drawable/ic_popup_reminder"
+            android:drawableTint="#78849B"
+            android:gravity="center"
+            android:paddingVertical="5dp"
+            android:text="Thông báo"
+            android:textColor="#78849B"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/navBookingProfile"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:drawableTop="@android:drawable/ic_menu_myplaces"
+            android:drawableTint="#78849B"
+            android:gravity="center"
+            android:paddingVertical="5dp"
+            android:text="Cá nhân"
+            android:textColor="#78849B"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

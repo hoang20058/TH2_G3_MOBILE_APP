@@ -1,52 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <EditText
-        android:id="@+id/edtDialogStudentCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Student Code (e.g. SE17001)" />
-
-    <EditText
-        android:id="@+id/edtDialogFullname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Full Name" />
-
-    <EditText
-        android:id="@+id/edtDialogEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/edtDialogPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Phone Number"
-        android:inputType="phone" />
-
-    <EditText
-        android:id="@+id/edtDialogUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Login Username (for new student)" />
-
-    <EditText
-        android:id="@+id/edtDialogPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Login Password (default 123)"
-        android:inputType="textPassword" />
-
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content" android:fillViewport="true"><LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="24dp" android:paddingBottom="12dp">
+<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Thông tin hồ sơ" android:textColor="@color/student_muted" android:textSize="13sp" android:layout_marginTop="8dp"/>
+<com.google.android.material.textfield.TextInputLayout android:id="@+id/studentFieldStudentCode" style="@style/StudentField" android:hint="Mã sinh viên *" ><com.google.android.material.textfield.TextInputEditText android:id="@+id/edtDialogStudentCode" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="54dp" android:inputType="textCapCharacters" android:singleLine="true" android:textColor="@color/student_navy" android:textSize="15sp" android:imeOptions="actionNext"/></com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputLayout android:id="@+id/studentFieldFullname" style="@style/StudentField" android:hint="Họ và tên *" ><com.google.android.material.textfield.TextInputEditText android:id="@+id/edtDialogFullname" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="54dp" android:inputType="textPersonName" android:singleLine="true" android:textColor="@color/student_navy" android:textSize="15sp" android:imeOptions="actionNext"/></com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputLayout android:id="@+id/studentFieldEmail" style="@style/StudentField" android:hint="Email" ><com.google.android.material.textfield.TextInputEditText android:id="@+id/edtDialogEmail" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="54dp" android:inputType="textEmailAddress" android:singleLine="true" android:textColor="@color/student_navy" android:textSize="15sp" android:imeOptions="actionNext"/></com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputLayout android:id="@+id/studentFieldPhone" style="@style/StudentField" android:hint="Số điện thoại" ><com.google.android.material.textfield.TextInputEditText android:id="@+id/edtDialogPhone" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="54dp" android:inputType="phone" android:singleLine="true" android:textColor="@color/student_navy" android:textSize="15sp" android:imeOptions="actionNext"/></com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputLayout android:id="@+id/studentFieldUsername" style="@style/StudentField" android:hint="Tên đăng nhập *" ><com.google.android.material.textfield.TextInputEditText android:id="@+id/edtDialogUsername" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="54dp" android:inputType="text" android:singleLine="true" android:textColor="@color/student_navy" android:textSize="15sp" android:imeOptions="actionNext"/></com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputLayout android:id="@+id/studentFieldPassword" style="@style/StudentField" android:hint="Mật khẩu *" app:endIconMode="password_toggle"><com.google.android.material.textfield.TextInputEditText android:id="@+id/edtDialogPassword" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="54dp" android:inputType="textPassword" android:singleLine="true" android:textColor="@color/student_navy" android:textSize="15sp" android:imeOptions="actionDone"/></com.google.android.material.textfield.TextInputLayout>
+<TextView android:id="@+id/studentAccountNote" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="Tài khoản được tạo cùng hồ sơ sinh viên. Các mục có * là bắt buộc." android:textColor="@color/student_muted" android:textSize="12sp"/>
+</LinearLayout></ScrollView>
