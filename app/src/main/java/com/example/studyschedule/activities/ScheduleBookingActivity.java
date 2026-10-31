@@ -32,12 +32,15 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studyschedule.MainActivity;
 import com.example.studyschedule.R;
 import com.example.studyschedule.adapters.ScheduleAdapter;
 import com.example.studyschedule.dal.StudyScheduleDAO;
 import com.example.studyschedule.models.StudySchedule;
 import com.example.studyschedule.models.Subject;
 import com.example.studyschedule.utils.Constants;
+import com.example.studyschedule.utils.NotificationHelper;
+import com.example.studyschedule.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -99,7 +102,8 @@ public class ScheduleBookingActivity extends AppCompatActivity
         findViewById(R.id.navBookingProfile).setOnClickListener(v -> showProfile());
         // Member 5 owns the destination and notification behavior.
         findViewById(R.id.navBookingNotifications).setOnClickListener(v ->
-                startActivity(new Intent(this, CalendarScheduleActivity.class)));
+                startActivity(new Intent(this, CalendarScheduleActivity.class)
+                        .putExtra(Constants.EXTRA_STUDENT_ID, studentId)));
 
         Calendar morning = Calendar.getInstance();
         morning.set(Calendar.HOUR_OF_DAY, 8);
@@ -295,13 +299,27 @@ public class ScheduleBookingActivity extends AppCompatActivity
                 stopEditing();
                 return;
             }
-            boolean success = editingId > 0 ? dao.updateSchedule(schedule) == 1 : dao.insertSchedule(schedule) > 0;
-            if (!success) {
+            boolean isEditing = editingId > 0;
+            long savedId = isEditing ? (dao.updateSchedule(schedule) == 1 ? editingId : -1) : dao.insertSchedule(schedule);
+            if (savedId <= 0) {
                 toast("Không thể lưu lịch. Vui lòng kiểm tra lại khung giờ.");
                 refreshAvailability();
                 return;
             }
-            toast(editingId > 0 ? "Đã cập nhật lịch học." : "Đặt lịch học thành công.");
+            schedule.setId((int) savedId);
+            int pos = subjectSpinner.getSelectedItemPosition();
+            if (pos >= 0 && pos < subjects.size()) {
+                schedule.setSubjectName(subjects.get(pos).getSubjectName());
+                schedule.setSubjectCode(subjects.get(pos).getSubjectCode());
+            }
+            NotificationHelper.scheduleOrUpdateReminder(this, schedule);
+            NotificationHelper.sendInstantNotification(
+                    this,
+                    isEditing ? "Lịch học đã cập nhật" : "Đặt lịch học thành công",
+                    (schedule.getSubjectName() != null ? schedule.getSubjectName() : "Buổi học")
+                            + " lúc " + startTime + " (" + ScheduleAdapter.displayDate(storageDate(), false) + ") tại " + location
+            );
+            toast(isEditing ? "Đã cập nhật lịch học." : "Đặt lịch học thành công.");
             stopEditing();
             refreshPreview();
         } catch (RuntimeException e) {
@@ -355,20 +373,41 @@ public class ScheduleBookingActivity extends AppCompatActivity
         PopupMenu menu = new PopupMenu(this, anchor);
         menu.getMenu().add(0, 1, 0, "Lịch đã đặt");
         menu.getMenu().add(0, 2, 1, "Đặt lịch mới");
-        menu.getMenu().add(0, 3, 2, "Cá nhân");
+        menu.getMenu().add(0, 3, 2, "Lịch & Thông báo (Calendar)");
+        menu.getMenu().add(0, 4, 3, "Màn hình chính (Home)");
+        menu.getMenu().add(0, 5, 4, "Cá nhân / Đăng xuất");
         menu.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == 1) openSchedules();
             else if (item.getItemId() == 2) stopEditing();
-            else showProfile();
+            else if (item.getItemId() == 3) {
+                startActivity(new Intent(this, CalendarScheduleActivity.class)
+                        .putExtra(Constants.EXTRA_STUDENT_ID, studentId));
+            } else if (item.getItemId() == 4) {
+                startActivity(new Intent(this, MainActivity.class));
+            } else showProfile();
             return true;
         });
         menu.show();
     }
 
     private void showProfile() {
-        new AlertDialog.Builder(this).setTitle("Cá nhân")
-                .setMessage("Lịch học cá nhân\nMã sinh viên: " + studentId)
-                .setPositiveButton("Đóng", null).show();
+        SessionManager sm = new SessionManager(this);
+        String username = sm.getUsername().isEmpty() ? "sv01" : sm.getUsername();
+        String role = sm.getRole().isEmpty() ? Constants.ROLE_STUDENT : sm.getRole();
+        new AlertDialog.Builder(this).setTitle("Thông tin tài khoản")
+                .setMessage("Tài khoản: " + username
+                        + "\nVai trò: " + role
+                        + "\nMã sinh viên (ID): " + studentId)
+                .setPositiveButton("Đóng", null)
+                .setNeutralButton("Về Trang chủ", (d, w) -> startActivity(new Intent(this, MainActivity.class)))
+                .setNegativeButton("Đăng xuất", (d, w) -> {
+                    sm.logout();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .show();
     }
 
     @Override public void onView(StudySchedule item) {
@@ -450,9 +489,11 @@ public class ScheduleBookingActivity extends AppCompatActivity
     }
 
     static int resolveStudentId(AppCompatActivity activity) {
-        // Run member 4's module directly with seeded SV001; callers may select another student.
-        int id = activity.getIntent().getIntExtra(Constants.EXTRA_STUDENT_ID, 1);
-        return id > 0 ? id : 1;
+        int fromIntent = activity.getIntent().getIntExtra(Constants.EXTRA_STUDENT_ID, -1);
+        if (fromIntent > 0) return fromIntent;
+        SessionManager sm = new SessionManager(activity);
+        int fromSession = sm.getStudentId();
+        return fromSession > 0 ? fromSession : 1;
     }
 
     static boolean ownsSchedule(StudyScheduleDAO dao, int studentId, int scheduleId) {

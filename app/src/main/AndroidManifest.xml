@@ -13,10 +13,15 @@
         android:theme="@style/Theme.StudyScheduleApp"
         tools:targetApi="31">
 
-        <!-- Người 1: Login & MainActivity -->
+        <!-- Người 1: Login (Màn hình khởi động chính) & MainActivity -->
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".MainActivity"
@@ -44,12 +49,7 @@
         <activity
             android:name=".activities.ScheduleBookingActivity"
             android:exported="true"
-            android:label="Đặt lịch học">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="Đặt lịch học" />
 
         <!-- Người 5: Calendar View & Notifications (Student) -->
         <activity

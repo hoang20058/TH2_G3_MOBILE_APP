@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.studyschedule.MainActivity;
 import com.example.studyschedule.R;
 import com.example.studyschedule.dal.DBHelper;
 import com.example.studyschedule.models.StudySchedule;
@@ -168,6 +170,11 @@ public class CalendarScheduleActivity extends AppCompatActivity {
             refreshAllUI();
         });
 
+        View btnMenuDrawer = findViewById(R.id.btnMenuDrawer);
+        if (btnMenuDrawer != null) {
+            btnMenuDrawer.setOnClickListener(this::showMenuPopup);
+        }
+
         FrameLayout btnBell = findViewById(R.id.btnBellNotification);
         TextView btnSeeAllNotif = findViewById(R.id.btnSyncReminders);
         View.OnClickListener reminderSyncClick = v -> triggerAndShowAllNotifications();
@@ -195,6 +202,7 @@ public class CalendarScheduleActivity extends AppCompatActivity {
         View btnBookDate = findViewById(R.id.btnBookOnSelectedDate);
         btnBookDate.setOnClickListener(v -> {
             Intent intent = new Intent(this, ScheduleBookingActivity.class);
+            intent.putExtra(Constants.EXTRA_STUDENT_ID, getCurrentStudentId());
             intent.putExtra(Constants.EXTRA_SELECTED_DATE, selectedDate);
             startActivity(intent);
         });
@@ -203,14 +211,51 @@ public class CalendarScheduleActivity extends AppCompatActivity {
         navNotifications.setOnClickListener(reminderSyncClick);
 
         View navProfile = findViewById(R.id.navProfile);
-        navProfile.setOnClickListener(v -> {
-            String user = sessionManager.getUsername().isEmpty() ? "sv01 (Nguyễn Minh Anh - SV001)" : sessionManager.getUsername();
-            new AlertDialog.Builder(this)
-                    .setTitle("Thông tin sinh viên")
-                    .setMessage("Tài khoản: " + user + "\nMã SV: SV001\nVai trò: STUDENT")
-                    .setPositiveButton("Đóng", null)
-                    .show();
+        navProfile.setOnClickListener(v -> showProfileDialog());
+    }
+
+    private void showMenuPopup(View anchor) {
+        PopupMenu menu = new PopupMenu(this, anchor);
+        menu.getMenu().add(0, 1, 0, "Màn hình chính (Home)");
+        menu.getMenu().add(0, 2, 1, "Danh sách lịch học");
+        menu.getMenu().add(0, 3, 2, "Đặt lịch học mới");
+        menu.getMenu().add(0, 4, 3, "Tài khoản / Đăng xuất");
+        menu.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == 1) {
+                startActivity(new Intent(this, MainActivity.class));
+            } else if (id == 2) {
+                startActivity(new Intent(this, ScheduleListActivity.class)
+                        .putExtra(Constants.EXTRA_STUDENT_ID, getCurrentStudentId()));
+            } else if (id == 3) {
+                startActivity(new Intent(this, ScheduleBookingActivity.class)
+                        .putExtra(Constants.EXTRA_STUDENT_ID, getCurrentStudentId())
+                        .putExtra(Constants.EXTRA_SELECTED_DATE, selectedDate));
+            } else {
+                showProfileDialog();
+            }
+            return true;
         });
+        menu.show();
+    }
+
+    private void showProfileDialog() {
+        String user = sessionManager.getUsername().isEmpty() ? "sv01 (Nguyễn Minh Anh)" : sessionManager.getUsername();
+        String role = sessionManager.getRole().isEmpty() ? Constants.ROLE_STUDENT : sessionManager.getRole();
+        int studentId = getCurrentStudentId();
+        new AlertDialog.Builder(this)
+                .setTitle("Thông tin tài khoản")
+                .setMessage("Tài khoản: " + user + "\nMã SV (ID): " + studentId + "\nVai trò: " + role)
+                .setPositiveButton("Đóng", null)
+                .setNeutralButton("Về Trang chủ", (d, w) -> startActivity(new Intent(this, MainActivity.class)))
+                .setNegativeButton("Đăng xuất", (d, w) -> {
+                    sessionManager.logout();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .show();
     }
 
     /**
@@ -518,6 +563,8 @@ public class CalendarScheduleActivity extends AppCompatActivity {
     }
 
     private int getCurrentStudentId() {
+        int fromIntent = getIntent().getIntExtra(Constants.EXTRA_STUDENT_ID, -1);
+        if (fromIntent > 0) return fromIntent;
         int id = sessionManager.getStudentId();
         return id > 0 ? id : 1;
     }

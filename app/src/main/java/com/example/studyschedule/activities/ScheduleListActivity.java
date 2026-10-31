@@ -27,6 +27,7 @@ import com.example.studyschedule.adapters.ScheduleAdapter;
 import com.example.studyschedule.dal.StudyScheduleDAO;
 import com.example.studyschedule.models.StudySchedule;
 import com.example.studyschedule.utils.Constants;
+import com.example.studyschedule.utils.NotificationHelper;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
@@ -163,6 +164,12 @@ public class ScheduleListActivity extends AppCompatActivity
                         if (!ScheduleBookingActivity.ownsSchedule(dao, studentId, item.getId())) {
                             toast(activity, "Lịch học không còn tồn tại.");
                         } else if (dao.updateScheduleStatus(item.getId(), values[which]) == 1) {
+                            item.setStatus(values[which]);
+                            if (Constants.STATUS_CANCELLED.equals(values[which])) {
+                                NotificationHelper.cancelReminder(activity, item.getId());
+                            } else {
+                                NotificationHelper.scheduleOrUpdateReminder(activity, item);
+                            }
                             toast(activity, "Đã cập nhật trạng thái.");
                         } else {
                             toast(activity, "Không thể đổi trạng thái vì khung giờ bị trùng.");
@@ -195,6 +202,9 @@ public class ScheduleListActivity extends AppCompatActivity
                                     } else {
                                         int count = delete ? dao.deleteSchedule(item.getId())
                                                 : dao.updateScheduleStatus(item.getId(), Constants.STATUS_CANCELLED);
+                                        if (count == 1) {
+                                            NotificationHelper.cancelReminder(activity, item.getId());
+                                        }
                                         toast(activity, count == 1 ? (delete ? "Đã xóa lịch học." : "Đã hủy lịch học.")
                                                 : "Không thể cập nhật lịch học.");
                                     }

@@ -4,10 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
 import com.example.studyschedule.models.Student;
 import com.example.studyschedule.utils.Constants;
 import java.util.ArrayList;
@@ -30,29 +26,10 @@ public class StudentDAO {
                 c.getInt(c.getColumnIndexOrThrow("accountId")));
     }
     public Student getStudentByAccountId(int accountId) {
-<<<<<<< HEAD
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try (Cursor cursor = db.query(DBHelper.TABLE_STUDENT, null,
-                DBHelper.COL_STU_ACCOUNT_ID + " = ?", new String[]{String.valueOf(accountId)},
-                null, null, null)) {
-            if (cursor.moveToFirst()) {
-                return new Student(
-                        cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_ID)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_CODE)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_FULLNAME)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_EMAIL)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_PHONE)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_ACCOUNT_ID))
-                );
-            }
-        }
-        return null;
-=======
         try (Cursor c = dbHelper.getReadableDatabase().query("Student", null,
                 "accountId = ?", new String[]{String.valueOf(accountId)}, null, null, null)) {
             return c.moveToFirst() ? read(c) : null;
         }
->>>>>>> origin/main
     }
     public int getStudentCount() {
         try (Cursor c = dbHelper.getReadableDatabase().rawQuery("SELECT COUNT(*) FROM Student", null)) {
@@ -110,7 +87,6 @@ public class StudentDAO {
         }
         ContentValues account = new ContentValues();
         account.put("username", username.trim());
-        // Match the existing Account seed format until module 1 defines shared authentication.
         account.put("password", password);
         account.put("role", Constants.ROLE_STUDENT);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -124,7 +100,6 @@ public class StudentDAO {
         } finally { db.endTransaction(); }
     }
     public int updateStudent(Student student) {
-        // Only profile fields change; preserve the persisted account relationship.
         return dbHelper.getWritableDatabase().update("Student", profile(student),
                 "id = ?", new String[]{String.valueOf(student.getId())});
     }
@@ -141,13 +116,11 @@ public class StudentDAO {
             }
             db.delete("StudySchedule", "studentId = ?", new String[]{String.valueOf(student.getId())});
             deleted = db.delete("Student", "id = ?", new String[]{String.valueOf(student.getId())});
-            // Protect unrelated accounts, including legacy shared accountId values.
             db.delete("Account", "id = ? AND role = ? AND NOT EXISTS "
                             + "(SELECT 1 FROM Student WHERE accountId = Account.id)",
                     new String[]{String.valueOf(accountId), Constants.ROLE_STUDENT});
             db.setTransactionSuccessful();
         } finally { db.endTransaction(); }
-        // Reminder cancellation must be integrated with module 5 once its API is available.
         return deleted;
     }
 }
