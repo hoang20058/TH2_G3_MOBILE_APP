@@ -252,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
 
-            <!-- 6. PHẦN THÔNG BÁO (Thông báo --- Xem tất cả) -->
+            <!-- 6. PHẦN THÔNG BÁO (Thông báo và Xem tất cả) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
