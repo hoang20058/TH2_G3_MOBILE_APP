@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissions for Notifications (Member 5) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
@@ -14,9 +13,9 @@
         android:theme="@style/Theme.StudyScheduleApp"
         tools:targetApi="31">
 
-        <!-- MEMBER 1: Auth & Dashboards -->
+        <!-- Người 1: Login & MainActivity -->
         <activity
-            android:name=".ui.auth.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,46 +24,41 @@
         </activity>
 
         <activity
-            android:name=".ui.dashboard.AdminDashboardActivity"
+            android:name=".MainActivity"
             android:exported="false"
-            android:label="Admin Dashboard" />
+            android:label="Study Schedule Home" />
 
+        <!-- Người 2: Student Management (Admin) -->
         <activity
-            android:name=".ui.dashboard.StudentDashboardActivity"
-            android:exported="false"
-            android:label="Student Dashboard" />
-
-        <!-- MEMBER 2: Student Management (Admin) -->
-        <activity
-            android:name=".ui.student.StudentManagementActivity"
+            android:name=".activities.StudentManagementActivity"
             android:exported="false"
             android:label="Student Management" />
 
-        <!-- MEMBER 3: Subject Management (Admin) -->
+        <!-- Người 3: Subject Management (Admin) -->
         <activity
-            android:name=".ui.subject.SubjectManagementActivity"
+            android:name=".activities.SubjectManagementActivity"
             android:exported="false"
             android:label="Subject Management" />
 
-        <!-- MEMBER 4: Study Schedule Management & Booking (Student) -->
+        <!-- Người 4: Study Schedule Management & Booking (Student) -->
         <activity
-            android:name=".ui.schedule.ScheduleListActivity"
+            android:name=".activities.ScheduleListActivity"
             android:exported="false"
             android:label="My Study Schedules" />
 
         <activity
-            android:name=".ui.schedule.ScheduleBookingActivity"
+            android:name=".activities.ScheduleBookingActivity"
             android:exported="false"
             android:label="Book / Edit Study Session" />
 
-        <!-- MEMBER 5: Calendar View & Notifications (Student) -->
+        <!-- Người 5: Calendar View & Notifications (Student) -->
         <activity
-            android:name=".ui.calendar.CalendarScheduleActivity"
+            android:name=".activities.CalendarScheduleActivity"
             android:exported="false"
-            android:label="Study Calendar" />
+            android:label="Study Calendar &amp; Reminders" />
 
         <receiver
-            android:name=".receiver.ScheduleAlarmReceiver"
+            android:name=".utils.ScheduleAlarmReceiver"
             android:exported="false" />
 
     </application>

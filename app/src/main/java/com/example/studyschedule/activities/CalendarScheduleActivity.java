@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.calendar;
+package com.example.studyschedule.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,19 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studyschedule.R;
-import com.example.studyschedule.dao.StudyScheduleDao;
-import com.example.studyschedule.model.StudySchedule;
-import com.example.studyschedule.ui.schedule.ScheduleAdapter;
+import com.example.studyschedule.adapters.ScheduleAdapter;
+import com.example.studyschedule.dal.StudyScheduleDAO;
+import com.example.studyschedule.models.StudySchedule;
 import com.example.studyschedule.utils.SessionManager;
 
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Màn hình Lịch học theo Ngày / Tuần / Tháng (Calendar View) (Phụ trách chính: Thành viên 5).
- * Chức năng yêu cầu:
- * - Hiển thị lịch học theo Ngày (Daily), Tuần (Weekly), hoặc Tháng (Monthly)
- * - Kết hợp với NotificationHelper & ScheduleAlarmReceiver để nhắc nhở lịch học sắp tới
+ * CalendarScheduleActivity (Khung cơ bản cho Người 5 - feature/calendar-notifications).
  */
 public class CalendarScheduleActivity extends AppCompatActivity {
 
@@ -31,17 +28,17 @@ public class CalendarScheduleActivity extends AppCompatActivity {
     private Button btnModeDay, btnModeWeek, btnModeMonth;
     private RecyclerView rvCalendarSchedules;
 
-    private StudyScheduleDao scheduleDao;
+    private StudyScheduleDAO scheduleDAO;
     private SessionManager sessionManager;
     private ScheduleAdapter adapter;
-    private String selectedDate = "2026-11-01";
+    private String selectedDate = "2026-10-31";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar_schedule);
 
-        scheduleDao = new StudyScheduleDao(this);
+        scheduleDAO = new StudyScheduleDAO(this);
         sessionManager = new SessionManager(this);
 
         calendarView = findViewById(R.id.calendarView);
@@ -60,27 +57,13 @@ public class CalendarScheduleActivity extends AppCompatActivity {
             loadDailySchedule(selectedDate);
         });
 
-        btnModeDay.setOnClickListener(v -> loadDailySchedule(selectedDate));
-
-        btnModeWeek.setOnClickListener(v -> {
-            // TODO (Thành viên 5): Tính ngày đầu tuần & cuối tuần của selectedDate rồi gọi scheduleDao.getSchedulesBetweenDates(...)
-        });
-
-        btnModeMonth.setOnClickListener(v -> {
-            // TODO (Thành viên 5): Lấy từ yyyy-MM-01 đến yyyy-MM-31 bằng scheduleDao.getSchedulesBetweenDates(...)
-            String monthPrefix = selectedDate.substring(0, 7);
-            List<StudySchedule> list = scheduleDao.getSchedulesBetweenDates(
-                    sessionManager.getStudentId(), monthPrefix + "-01", monthPrefix + "-31");
-            tvSelectedPeriod.setText("Monthly Schedule: " + monthPrefix);
-            adapter.setScheduleList(list);
-        });
-
+        // TODO (Người 5): Hoàn thiện xem theo Ngày/Tuần/Tháng, xem chi tiết lịch và nhắc lịch sắp tới
         loadDailySchedule(selectedDate);
     }
 
     private void loadDailySchedule(String date) {
         tvSelectedPeriod.setText("Daily Schedule: " + date);
-        List<StudySchedule> list = scheduleDao.getSchedulesByDate(sessionManager.getStudentId(), date);
+        List<StudySchedule> list = scheduleDAO.getSchedulesByDate(sessionManager.getStudentId(), date);
         adapter.setScheduleList(list);
     }
 }

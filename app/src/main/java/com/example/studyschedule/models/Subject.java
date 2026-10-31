@@ -1,4 +1,4 @@
-package com.example.studyschedule.model;
+package com.example.studyschedule.models;
 
 /**
  * Table: Subject(id, subjectCode, subjectName, description, credits)
@@ -70,7 +70,6 @@ public class Subject {
 
     @Override
     public String toString() {
-        // Hỗ trợ hiển thị trực tiếp trên Spinner khi đặt lịch học
         return subjectCode + " - " + subjectName;
     }
 }

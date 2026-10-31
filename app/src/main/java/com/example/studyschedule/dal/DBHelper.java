@@ -1,4 +1,4 @@
-package com.example.studyschedule.database;
+package com.example.studyschedule.dal;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,13 +7,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.studyschedule.utils.Constants;
 
 /**
- * DatabaseHelper dùng chung cho toàn bộ dự án.
- * CHÚ Ý QUAN TRỌNG:
- * - File này ĐÃ TẠO ĐẦY ĐỦ 4 BẢNG và DỮ LIỆU MẪU (Seed Data).
- * - Các thành viên KHÔNG viết hàm truy vấn trực tiếp vào file này để tránh xung đột (Merge Conflict).
- * - Thay vào đó, mỗi thành viên viết truy vấn trong class DAO riêng của mình tại package `com.example.studyschedule.dao`.
+ * DBHelper theo đúng cấu trúc chuẩn của đề thi:
+ * com.example.studyschedule
+ * ├── activities
+ * ├── dal
+ * │   └── DBHelper.java
+ * ├── models
+ * └── MainActivity.java
  */
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "StudyScheduleManagement.db";
     public static final int DATABASE_VERSION = 1;
@@ -53,16 +55,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_SCH_LOCATION = "location";
     public static final String COL_SCH_STATUS = "status";
 
-    private static DatabaseHelper instance;
+    private static DBHelper instance;
 
-    public static synchronized DatabaseHelper getInstance(Context context) {
+    public static synchronized DBHelper getInstance(Context context) {
         if (instance == null) {
-            instance = new DatabaseHelper(context.getApplicationContext());
+            instance = new DBHelper(context.getApplicationContext());
         }
         return instance;
     }
 
-    public DatabaseHelper(Context context) {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -74,14 +76,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Tạo bảng Account
         String createAccountTable = "CREATE TABLE " + TABLE_ACCOUNT + " ("
                 + COL_ACC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_ACC_USERNAME + " TEXT NOT NULL UNIQUE, "
                 + COL_ACC_PASSWORD + " TEXT NOT NULL, "
                 + COL_ACC_ROLE + " TEXT NOT NULL)";
 
-        // Tạo bảng Student
         String createStudentTable = "CREATE TABLE " + TABLE_STUDENT + " ("
                 + COL_STU_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_STU_CODE + " TEXT NOT NULL UNIQUE, "
@@ -91,7 +91,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL_STU_ACCOUNT_ID + " INTEGER, "
                 + "FOREIGN KEY(" + COL_STU_ACCOUNT_ID + ") REFERENCES " + TABLE_ACCOUNT + "(" + COL_ACC_ID + ") ON DELETE CASCADE)";
 
-        // Tạo bảng Subject
         String createSubjectTable = "CREATE TABLE " + TABLE_SUBJECT + " ("
                 + COL_SUB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_SUB_CODE + " TEXT NOT NULL UNIQUE, "
@@ -99,7 +98,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COL_SUB_DESC + " TEXT, "
                 + COL_SUB_CREDITS + " INTEGER NOT NULL)";
 
-        // Tạo bảng StudySchedule
         String createScheduleTable = "CREATE TABLE " + TABLE_SCHEDULE + " ("
                 + COL_SCH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_SCH_STUDENT_ID + " INTEGER NOT NULL, "
@@ -120,19 +118,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         seedInitialData(db);
     }
 
-    /**
-     * Dữ liệu mẫu giúp cả 5 thành viên có thể test độc lập ngay lập tức mà không cần chờ nhau.
-     * - Admin: username = "admin", password = "123"
-     * - Student 1: username = "sv01", password = "123" (studentId = 1)
-     * - Student 2: username = "sv02", password = "123" (studentId = 2)
-     */
     private void seedInitialData(SQLiteDatabase db) {
-        // 1. Seed Accounts
+        // 1. Seed Accounts (admin/123, sv01/123, sv02/123)
         db.execSQL("INSERT INTO " + TABLE_ACCOUNT + " (username, password, role) VALUES ('admin', '123', '" + Constants.ROLE_ADMIN + "')");
         db.execSQL("INSERT INTO " + TABLE_ACCOUNT + " (username, password, role) VALUES ('sv01', '123', '" + Constants.ROLE_STUDENT + "')");
         db.execSQL("INSERT INTO " + TABLE_ACCOUNT + " (username, password, role) VALUES ('sv02', '123', '" + Constants.ROLE_STUDENT + "')");
 
-        // 2. Seed Students (accountId = 2 cho sv01, accountId = 3 cho sv02)
+        // 2. Seed Students
         db.execSQL("INSERT INTO " + TABLE_STUDENT + " (studentCode, fullname, email, phone, accountId) "
                 + "VALUES ('SE17001', 'Nguyen Van An', 'annv@fpt.edu.vn', '0901234567', 2)");
         db.execSQL("INSERT INTO " + TABLE_STUDENT + " (studentCode, fullname, email, phone, accountId) "
@@ -146,9 +138,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_SUBJECT + " (subjectCode, subjectName, description, credits) "
                 + "VALUES ('PRN211', 'Cross-Platform .NET', 'C# and .NET Application Development', 3)");
 
-        // 4. Seed Sample StudySchedules cho Student 1 (id = 1)
+        // 4. Seed Sample StudySchedules
         db.execSQL("INSERT INTO " + TABLE_SCHEDULE + " (studentId, subjectId, studyDate, startTime, endTime, location, status) "
-                + "VALUES (1, 1, '2026-11-01', '08:00', '10:00', 'Room BE-301', '" + Constants.STATUS_CONFIRMED + "')");
+                + "VALUES (1, 1, '2026-10-31', '08:00', '10:00', 'Room BE-301', '" + Constants.STATUS_CONFIRMED + "')");
         db.execSQL("INSERT INTO " + TABLE_SCHEDULE + " (studentId, subjectId, studyDate, startTime, endTime, location, status) "
                 + "VALUES (1, 2, '2026-11-01', '13:30', '15:30', 'Library Study Pod 2', '" + Constants.STATUS_PENDING + "')");
     }

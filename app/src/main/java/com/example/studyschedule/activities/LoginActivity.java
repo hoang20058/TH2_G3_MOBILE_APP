@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.auth;
+package com.example.studyschedule.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,28 +9,24 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.studyschedule.MainActivity;
 import com.example.studyschedule.R;
-import com.example.studyschedule.dao.AccountDao;
-import com.example.studyschedule.dao.StudentDao;
-import com.example.studyschedule.model.Account;
-import com.example.studyschedule.model.Student;
-import com.example.studyschedule.ui.dashboard.AdminDashboardActivity;
-import com.example.studyschedule.ui.dashboard.StudentDashboardActivity;
+import com.example.studyschedule.dal.AccountDAO;
+import com.example.studyschedule.dal.StudentDAO;
+import com.example.studyschedule.models.Account;
+import com.example.studyschedule.models.Student;
 import com.example.studyschedule.utils.Constants;
 import com.example.studyschedule.utils.SessionManager;
 
 /**
- * Màn hình Login (Phụ trách chính: Thành viên 1).
- * Tài khoản mẫu đã có sẵn trong DatabaseHelper:
- * - Admin: admin / 123
- * - Student: sv01 / 123 hoặc sv02 / 123
+ * LoginActivity (Người 1 - feature/auth-core).
  */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edtUsername, edtPassword;
     private Button btnLogin;
-    private AccountDao accountDao;
-    private StudentDao studentDao;
+    private AccountDAO accountDAO;
+    private StudentDAO studentDAO;
     private SessionManager sessionManager;
 
     @Override
@@ -38,13 +34,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        accountDao = new AccountDao(this);
-        studentDao = new StudentDao(this);
+        accountDAO = new AccountDAO(this);
+        studentDAO = new StudentDAO(this);
         sessionManager = new SessionManager(this);
 
-        // Nếu đã đăng nhập trước đó trong SharedPreferences thì tự động chuyển màn hình
         if (sessionManager.isLoggedIn()) {
-            navigateByRole(sessionManager.getRole());
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
             return;
         }
 
@@ -64,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        Account account = accountDao.login(username, password);
+        Account account = accountDAO.login(username, password);
         if (account == null) {
             Toast.makeText(this, "Invalid username or password!", Toast.LENGTH_SHORT).show();
             return;
@@ -72,25 +68,14 @@ public class LoginActivity extends AppCompatActivity {
 
         int studentId = -1;
         if (Constants.ROLE_STUDENT.equalsIgnoreCase(account.getRole())) {
-            Student student = studentDao.getStudentByAccountId(account.getId());
+            Student student = studentDAO.getStudentByAccountId(account.getId());
             if (student != null) {
                 studentId = student.getId();
             }
         }
 
-        // Lưu thông tin đăng nhập vào SharedPreferences
         sessionManager.saveLoginSession(account.getId(), studentId, account.getUsername(), account.getRole());
-        navigateByRole(account.getRole());
-    }
-
-    private void navigateByRole(String role) {
-        Intent intent;
-        if (Constants.ROLE_ADMIN.equalsIgnoreCase(role)) {
-            intent = new Intent(this, AdminDashboardActivity.class);
-        } else {
-            intent = new Intent(this, StudentDashboardActivity.class);
-        }
-        startActivity(intent);
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

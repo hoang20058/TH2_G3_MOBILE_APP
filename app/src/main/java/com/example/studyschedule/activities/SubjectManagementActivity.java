@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.subject;
+package com.example.studyschedule.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -9,26 +9,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studyschedule.R;
-import com.example.studyschedule.dao.SubjectDao;
-import com.example.studyschedule.model.Subject;
+import com.example.studyschedule.adapters.SubjectAdapter;
+import com.example.studyschedule.dal.SubjectDAO;
+import com.example.studyschedule.models.Subject;
 
 import java.util.List;
 
 /**
- * Màn hình Quản lý Môn học dành cho Admin (Phụ trách chính: Thành viên 3).
- * Chức năng yêu cầu:
- * - Xem danh sách môn học (View)
- * - Tìm kiếm môn học (Search)
- * - Thêm mới môn học (Add -> gọi subjectDao.insertSubject(...))
- * - Cập nhật môn học (Update -> gọi subjectDao.updateSubject(...))
- * - Xóa môn học (Delete -> gọi subjectDao.deleteSubject(...))
+ * SubjectManagementActivity (Người 3 - feature/subject-management).
  */
 public class SubjectManagementActivity extends AppCompatActivity {
 
     private EditText edtSearchSubject;
     private Button btnSearchSubject, btnAddSubject;
     private RecyclerView rvSubjects;
-    private SubjectDao subjectDao;
+    private SubjectDAO subjectDAO;
     private SubjectAdapter adapter;
 
     @Override
@@ -36,7 +31,7 @@ public class SubjectManagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject_management);
 
-        subjectDao = new SubjectDao(this);
+        subjectDAO = new SubjectDAO(this);
 
         edtSearchSubject = findViewById(R.id.edtSearchSubject);
         btnSearchSubject = findViewById(R.id.btnSearchSubject);
@@ -55,14 +50,14 @@ public class SubjectManagementActivity extends AppCompatActivity {
         });
 
         btnAddSubject.setOnClickListener(v -> {
-            // TODO (Thành viên 3): Mở AlertDialog sử dụng R.layout.dialog_subject_form để thêm mới Subject
+            // TODO (Người 3): Mở dialog thêm môn học
         });
     }
 
     private void loadSubjects(String keyword) {
         List<Subject> list = keyword.isEmpty()
-                ? subjectDao.getAllSubjects()
-                : subjectDao.searchSubjects(keyword);
+                ? subjectDAO.getAllSubjects()
+                : subjectDAO.searchSubjects(keyword);
         adapter.setSubjectList(list);
     }
 }

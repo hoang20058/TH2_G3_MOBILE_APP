@@ -1,4 +1,4 @@
-package com.example.studyschedule.model;
+package com.example.studyschedule.models;
 
 /**
  * Table: StudySchedule(id, studentId, subjectId, studyDate, startTime, endTime, location, status)
@@ -13,7 +13,7 @@ public class StudySchedule {
     private String location;
     private String status;    // Pending, Confirmed, Cancelled
 
-    // Thuộc tính phụ trợ khi JOIN với bảng Subject để hiển thị lên UI dễ dàng
+    // Thuộc tính phụ trợ khi JOIN với bảng Subject
     private String subjectCode;
     private String subjectName;
 

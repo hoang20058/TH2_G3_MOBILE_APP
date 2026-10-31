@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.student;
+package com.example.studyschedule.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studyschedule.R;
-import com.example.studyschedule.model.Student;
+import com.example.studyschedule.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapter hiển thị danh sách Student (Phụ trách chính: Thành viên 2).
+ * StudentAdapter (Người 2 - feature/student-management).
  */
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
 
@@ -39,8 +39,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         Student student = studentList.get(position);
         holder.tvStudentCodeAndName.setText(student.getStudentCode() + " - " + student.getFullname());
         holder.tvStudentContact.setText("Email: " + student.getEmail() + " | Phone: " + student.getPhone());
-
-        // TODO (Thành viên 2): Gắn listener cho holder.btnEditStudent và holder.btnDeleteStudent
     }
 
     @Override

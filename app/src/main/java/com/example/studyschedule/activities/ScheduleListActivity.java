@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.schedule;
+package com.example.studyschedule.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,26 +10,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studyschedule.R;
-import com.example.studyschedule.dao.StudyScheduleDao;
-import com.example.studyschedule.model.StudySchedule;
+import com.example.studyschedule.adapters.ScheduleAdapter;
+import com.example.studyschedule.dal.StudyScheduleDAO;
+import com.example.studyschedule.models.StudySchedule;
 import com.example.studyschedule.utils.SessionManager;
 
 import java.util.List;
 
 /**
- * Màn hình Quản lý Lịch học cá nhân & Trạng thái (Phụ trách chính: Thành viên 4).
- * Chức năng yêu cầu:
- * - Xem danh sách lịch học của sinh viên đang đăng nhập (View)
- * - Tìm kiếm lịch học (Search)
- * - Đổi trạng thái lịch học: Pending, Confirmed, Cancelled (Schedule Status Management)
- * - Chuyển sang màn hình Sửa hoặc Xóa lịch học (Update / Delete)
+ * ScheduleListActivity (Người 4 - feature/study-schedule).
  */
 public class ScheduleListActivity extends AppCompatActivity {
 
     private EditText edtSearchSchedule;
     private Button btnSearchSchedule, btnGoToBookSchedule;
     private RecyclerView rvSchedules;
-    private StudyScheduleDao scheduleDao;
+    private StudyScheduleDAO scheduleDAO;
     private SessionManager sessionManager;
     private ScheduleAdapter adapter;
 
@@ -38,7 +34,7 @@ public class ScheduleListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_list);
 
-        scheduleDao = new StudyScheduleDao(this);
+        scheduleDAO = new StudyScheduleDAO(this);
         sessionManager = new SessionManager(this);
 
         edtSearchSchedule = findViewById(R.id.edtSearchSchedule);
@@ -68,8 +64,8 @@ public class ScheduleListActivity extends AppCompatActivity {
     private void loadSchedules(String keyword) {
         int studentId = sessionManager.getStudentId();
         List<StudySchedule> list = keyword.isEmpty()
-                ? scheduleDao.getSchedulesByStudent(studentId)
-                : scheduleDao.searchSchedules(studentId, keyword);
+                ? scheduleDAO.getSchedulesByStudent(studentId)
+                : scheduleDAO.searchSchedules(studentId, keyword);
         adapter.setScheduleList(list);
     }
 }

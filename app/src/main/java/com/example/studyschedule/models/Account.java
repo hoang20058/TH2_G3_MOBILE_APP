@@ -1,4 +1,4 @@
-package com.example.studyschedule.model;
+package com.example.studyschedule.models;
 
 /**
  * Table: Account(id, username, password, role)

@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.student;
+package com.example.studyschedule.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -9,26 +9,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studyschedule.R;
-import com.example.studyschedule.dao.StudentDao;
-import com.example.studyschedule.model.Student;
+import com.example.studyschedule.adapters.StudentAdapter;
+import com.example.studyschedule.dal.StudentDAO;
+import com.example.studyschedule.models.Student;
 
 import java.util.List;
 
 /**
- * Màn hình Quản lý Sinh viên dành cho Admin (Phụ trách chính: Thành viên 2).
- * Chức năng yêu cầu:
- * - Xem danh sách sinh viên (View)
- * - Tìm kiếm sinh viên (Search)
- * - Thêm mới sinh viên kèm tạo Account (Add -> gọi studentDao.insertStudentWithAccount(...))
- * - Cập nhật thông tin sinh viên (Update -> gọi studentDao.updateStudent(...))
- * - Xóa sinh viên (Delete -> gọi studentDao.deleteStudent(...))
+ * StudentManagementActivity (Người 2 - feature/student-management).
  */
 public class StudentManagementActivity extends AppCompatActivity {
 
     private EditText edtSearchStudent;
     private Button btnSearchStudent, btnAddStudent;
     private RecyclerView rvStudents;
-    private StudentDao studentDao;
+    private StudentDAO studentDAO;
     private StudentAdapter adapter;
 
     @Override
@@ -36,7 +31,7 @@ public class StudentManagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_management);
 
-        studentDao = new StudentDao(this);
+        studentDAO = new StudentDAO(this);
 
         edtSearchStudent = findViewById(R.id.edtSearchStudent);
         btnSearchStudent = findViewById(R.id.btnSearchStudent);
@@ -55,14 +50,14 @@ public class StudentManagementActivity extends AppCompatActivity {
         });
 
         btnAddStudent.setOnClickListener(v -> {
-            // TODO (Thành viên 2): Mở AlertDialog sử dụng R.layout.dialog_student_form để thêm mới Student
+            // TODO (Người 2): Mở dialog thêm sinh viên và tạo tài khoản Student
         });
     }
 
     private void loadStudents(String keyword) {
         List<Student> list = keyword.isEmpty()
-                ? studentDao.getAllStudents()
-                : studentDao.searchStudents(keyword);
+                ? studentDAO.getAllStudents()
+                : studentDAO.searchStudents(keyword);
         adapter.setStudentList(list);
     }
 }

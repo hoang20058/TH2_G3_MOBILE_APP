@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.schedule;
+package com.example.studyschedule.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studyschedule.R;
-import com.example.studyschedule.model.StudySchedule;
+import com.example.studyschedule.models.StudySchedule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapter hiển thị danh sách StudySchedule (Dùng chung cho Thành viên 4 và Thành viên 5).
+ * ScheduleAdapter (Dùng chung cho Người 4 & Người 5).
  */
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder> {
 
@@ -45,8 +45,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
                 + " | Time: " + item.getStartTime() + " - " + item.getEndTime());
         holder.tvScheduleLocationStatus.setText("Location: " + item.getLocation()
                 + " | Status: " + item.getStatus());
-
-        // TODO (Thành viên 4): Gắn listener cho btnChangeStatus, btnEditSchedule, btnDeleteSchedule
     }
 
     @Override

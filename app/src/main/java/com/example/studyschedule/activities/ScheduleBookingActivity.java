@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.schedule;
+package com.example.studyschedule.activities;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -10,10 +10,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studyschedule.R;
-import com.example.studyschedule.dao.StudyScheduleDao;
-import com.example.studyschedule.dao.SubjectDao;
-import com.example.studyschedule.model.StudySchedule;
-import com.example.studyschedule.model.Subject;
+import com.example.studyschedule.dal.StudyScheduleDAO;
+import com.example.studyschedule.dal.SubjectDAO;
+import com.example.studyschedule.models.StudySchedule;
+import com.example.studyschedule.models.Subject;
 import com.example.studyschedule.utils.Constants;
 import com.example.studyschedule.utils.NotificationHelper;
 import com.example.studyschedule.utils.SessionManager;
@@ -21,12 +21,7 @@ import com.example.studyschedule.utils.SessionManager;
 import java.util.List;
 
 /**
- * Màn hình Đặt lịch học / Cập nhật lịch học & Kiểm tra trùng lịch (Phụ trách chính: Thành viên 4).
- * Chức năng yêu cầu:
- * - Chọn môn học từ Spinner (Subject)
- * - Chọn ngày học (yyyy-MM-dd), giờ bắt đầu (HH:mm), giờ kết thúc (HH:mm), địa điểm
- * - Kiểm tra trùng lịch bằng `scheduleDao.hasScheduleConflict(...)`
- * - Lưu lịch học và bắn Notification qua `NotificationHelper.sendInstantNotification(...)`
+ * ScheduleBookingActivity (Người 4 - feature/study-schedule).
  */
 public class ScheduleBookingActivity extends AppCompatActivity {
 
@@ -34,8 +29,8 @@ public class ScheduleBookingActivity extends AppCompatActivity {
     private EditText edtStudyDate, edtStartTime, edtEndTime, edtLocation;
     private Button btnSaveSchedule;
 
-    private SubjectDao subjectDao;
-    private StudyScheduleDao scheduleDao;
+    private SubjectDAO subjectDAO;
+    private StudyScheduleDAO scheduleDAO;
     private SessionManager sessionManager;
     private List<Subject> subjectList;
     private int editingScheduleId = -1;
@@ -45,8 +40,8 @@ public class ScheduleBookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_booking);
 
-        subjectDao = new SubjectDao(this);
-        scheduleDao = new StudyScheduleDao(this);
+        subjectDAO = new SubjectDAO(this);
+        scheduleDAO = new StudyScheduleDAO(this);
         sessionManager = new SessionManager(this);
 
         spnSubject = findViewById(R.id.spnSubject);
@@ -59,20 +54,18 @@ public class ScheduleBookingActivity extends AppCompatActivity {
 
         setupSpinners();
 
-        // Hỗ trợ nhận ngày được chọn từ CalendarView (Thành viên 5) hoặc ID lịch cần sửa
         editingScheduleId = getIntent().getIntExtra(Constants.EXTRA_SCHEDULE_ID, -1);
         String preselectedDate = getIntent().getStringExtra(Constants.EXTRA_SELECTED_DATE);
         if (preselectedDate != null) {
             edtStudyDate.setText(preselectedDate);
         }
 
-        // TODO (Thành viên 4): Gắn DatePickerDialog cho edtStudyDate và TimePickerDialog cho edtStartTime, edtEndTime
-
+        // TODO (Người 4): Bổ sung DatePicker, TimePicker và nạp dữ liệu khi editingScheduleId != -1
         btnSaveSchedule.setOnClickListener(v -> saveSchedule());
     }
 
     private void setupSpinners() {
-        subjectList = subjectDao.getAllSubjects();
+        subjectList = subjectDAO.getAllSubjects();
         ArrayAdapter<Subject> subjectAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, subjectList);
         subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -109,11 +102,8 @@ public class ScheduleBookingActivity extends AppCompatActivity {
             return;
         }
 
-        // Kiểm tra trùng lịch (Schedule Conflict Validation)
-        boolean isConflict = scheduleDao.hasScheduleConflict(
-                studentId, studyDate, startTime, endTime, editingScheduleId);
-        if (isConflict) {
-            Toast.makeText(this, "Schedule Conflict! You already have a session during this time.", Toast.LENGTH_LONG).show();
+        if (scheduleDAO.hasScheduleConflict(studentId, studyDate, startTime, endTime, editingScheduleId)) {
+            Toast.makeText(this, "Schedule Conflict! Overlapping session on the same date & time.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -123,7 +113,7 @@ public class ScheduleBookingActivity extends AppCompatActivity {
         );
 
         if (editingScheduleId == -1) {
-            long id = scheduleDao.insertSchedule(schedule);
+            long id = scheduleDAO.insertSchedule(schedule);
             if (id != -1) {
                 NotificationHelper.sendInstantNotification(this,
                         "Study Session Booked",
@@ -132,7 +122,7 @@ public class ScheduleBookingActivity extends AppCompatActivity {
                 finish();
             }
         } else {
-            scheduleDao.updateSchedule(schedule);
+            scheduleDAO.updateSchedule(schedule);
             NotificationHelper.sendInstantNotification(this,
                     "Study Session Updated",
                     selectedSubject.getSubjectName() + " updated to " + studyDate + " (" + startTime + " - " + endTime + ")");

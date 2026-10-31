@@ -1,4 +1,4 @@
-package com.example.studyschedule.ui.subject;
+package com.example.studyschedule.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studyschedule.R;
-import com.example.studyschedule.model.Subject;
+import com.example.studyschedule.models.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapter hiển thị danh sách Subject (Phụ trách chính: Thành viên 3).
+ * SubjectAdapter (Người 3 - feature/subject-management).
  */
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder> {
 
@@ -39,8 +39,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         Subject subject = subjectList.get(position);
         holder.tvSubjectCodeAndName.setText(subject.getSubjectCode() + " - " + subject.getSubjectName());
         holder.tvSubjectDetails.setText("Credits: " + subject.getCredits() + " | " + subject.getDescription());
-
-        // TODO (Thành viên 3): Gắn listener cho holder.btnEditSubject và holder.btnDeleteSubject
     }
 
     @Override

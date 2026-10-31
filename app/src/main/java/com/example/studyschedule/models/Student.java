@@ -1,4 +1,4 @@
-package com.example.studyschedule.model;
+package com.example.studyschedule.models;
 
 /**
  * Table: Student(id, studentCode, fullname, email, phone, accountId)
