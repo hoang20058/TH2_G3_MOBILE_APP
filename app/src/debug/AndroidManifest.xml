@@ -10,5 +10,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- Chỉ có trong debug, chạy bằng cấu hình Module 3 - Test. -->
+        <activity
+            android:name=".activities.SubjectDebugActivity"
+            android:exported="true"
+            android:label="@string/subject_debug_title" />
     </application>
 </manifest>

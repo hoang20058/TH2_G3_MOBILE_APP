@@ -1,57 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-
-        <TextView
-            android:id="@+id/tvSubjectCodeAndName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PRM392 - Mobile Programming"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvSubjectDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Credits: 3 | Android Application Development"
-            android:textSize="14sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnEditSubject"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit" />
-
-            <Button
-                android:id="@+id/btnDeleteSubject"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Delete"
-                android:textColor="@color/status_cancelled" />
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp"
+    android:layout_marginStart="1dp" android:layout_marginEnd="1dp" android:clickable="true" android:focusable="true"
+    android:foreground="?attr/selectableItemBackground" app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="16dp" app:cardElevation="1dp" app:strokeColor="#EBEEF4" app:strokeWidth="1dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="center_vertical" android:paddingStart="12dp" android:paddingEnd="5dp" android:paddingTop="16dp" android:paddingBottom="16dp">
+        <ImageView android:id="@+id/ivSubjectIcon" android:layout_width="52dp" android:layout_height="52dp"
+            android:padding="13dp" android:src="@drawable/subject_database"
+            android:background="@drawable/subject_icon_purple_background" android:importantForAccessibility="no" />
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_marginStart="12dp" android:orientation="vertical">
+            <TextView android:id="@+id/tvSubjectCodeAndName" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="@color/subject_navy" android:textSize="15sp" android:textStyle="bold" tools:text="Cơ sở dữ liệu" />
+            <TextView android:id="@+id/tvSubjectCode" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="4dp" android:textColor="@color/subject_muted" android:textSize="13sp" tools:text="INT1306" />
+            <TextView android:id="@+id/tvSubjectDetails" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" android:textColor="@color/subject_muted" android:textSize="13sp" tools:text="3 tín chỉ" />
         </LinearLayout>
+        <ImageButton android:id="@+id/btnEditSubject" android:layout_width="48dp" android:layout_height="48dp"
+            android:padding="14dp" android:src="@drawable/subject_edit" android:background="@drawable/subject_edit_background"
+            android:contentDescription="@string/subject_edit" />
+        <ImageButton android:id="@+id/btnDeleteSubject" android:layout_width="48dp" android:layout_height="48dp"
+            android:padding="14dp" android:src="@drawable/subject_delete" android:background="@drawable/subject_delete_background"
+            android:contentDescription="@string/subject_delete" />
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
