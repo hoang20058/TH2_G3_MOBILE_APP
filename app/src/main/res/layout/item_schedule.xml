@@ -1,74 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    android:layout_marginHorizontal="1dp"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="1dp"
+    app:strokeColor="#E1E6F0"
+    app:strokeWidth="1dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-
+        android:minHeight="102dp"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/tvScheduleIcon"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:text="▤"
+            android:textColor="#8965ED"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/tvScheduleSubject"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="PRM392 - Mobile Programming"
-            android:textColor="@color/primary_dark"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="6dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#192653"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/btnChangeStatus"
+            app:layout_constraintStart_toEndOf="@id/tvScheduleIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Lập trình Java" />
+        <TextView
+            android:id="@+id/btnChangeStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingHorizontal="9dp"
+            android:textColor="#ED762D"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Chờ xác nhận" />
         <TextView
             android:id="@+id/tvScheduleDateTime"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Date: 2026-11-01 | Time: 08:00 - 10:00"
-            android:textSize="14sp" />
-
+            android:layout_marginEnd="4dp"
+            android:textColor="#78849B"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvScheduleSubject"
+            app:layout_constraintEnd_toStartOf="@id/btnChangeStatus"
+            app:layout_constraintTop_toBottomOf="@id/tvScheduleSubject"
+            tools:text="06/11 · 14:00 – 15:30" />
         <TextView
             android:id="@+id/tvScheduleLocationStatus"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Location: Room BE-301 | Status: Confirmed"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnChangeStatus"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status" />
-
-            <Button
-                android:id="@+id/btnEditSchedule"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="Edit" />
-
-            <Button
-                android:id="@+id/btnDeleteSchedule"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="Delete"
-                android:textColor="@color/status_cancelled" />
-        </LinearLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            android:layout_marginEnd="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#78849B"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvScheduleSubject"
+            app:layout_constraintEnd_toStartOf="@id/btnEditSchedule"
+            app:layout_constraintTop_toBottomOf="@id/tvScheduleDateTime"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:text="Thư viện A2" />
+        <ImageButton
+            android:id="@+id/btnEditSchedule"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Sửa lịch học"
+            android:padding="14dp"
+            android:src="@android:drawable/ic_menu_edit"
+            android:tint="#526583"
+            app:layout_constraintEnd_toStartOf="@id/btnDeleteSchedule"
+            app:layout_constraintTop_toBottomOf="@id/btnChangeStatus"
+            app:layout_constraintBottom_toBottomOf="parent" />
+        <ImageButton
+            android:id="@+id/btnDeleteSchedule"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Hủy hoặc xóa lịch học"
+            android:padding="14dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:tint="#F04464"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnChangeStatus"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

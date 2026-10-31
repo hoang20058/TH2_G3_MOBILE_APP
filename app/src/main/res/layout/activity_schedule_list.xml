@@ -1,44 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light"
+    android:background="#FCFCFF"
     android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".activities.ScheduleListActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
         android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edtSearchSchedule"
+        <ImageButton
+            android:id="@+id/btnBackSchedules"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Quay lại"
+            android:padding="12dp"
+            android:src="@android:drawable/ic_media_previous"
+            android:tint="#192653" />
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Search by subject, date, room..."
-            android:inputType="text" />
-
-        <Button
+            android:text="Lịch đã đặt"
+            android:textColor="#192653"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+        <ImageButton
             android:id="@+id/btnSearchSchedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Search" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Tìm kiếm lịch học"
+            android:padding="12dp"
+            android:src="@android:drawable/ic_menu_search"
+            android:tint="#192653" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnGoToBookSchedule"
+    <EditText
+        android:id="@+id/edtSearchSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:drawableTint="#526583"
+        android:drawablePadding="10dp"
+        android:hint="Tìm môn học, ngày, địa điểm…"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="120"
+        android:paddingHorizontal="12dp"
+        android:singleLine="true"
+        android:textColor="#192653"
+        android:textColorHint="#78849B"
+        android:textSize="14sp" />
+
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:text="+ Book New Study Session" />
+        android:paddingHorizontal="18dp"
+        android:scrollbars="none">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipScheduleStatuses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            app:checkedChip="@id/chipScheduleAll"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true">
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipScheduleAll"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tất cả" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSchedulePending"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chờ xác nhận" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipScheduleConfirmed"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đã xác nhận" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipScheduleCancelled"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đã hủy" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSchedules"
+    <TextView
+        android:id="@+id/tvScheduleCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#78849B"
+        android:textSize="13sp"
+        tools:text="2 lịch học" />
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSchedules"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingHorizontal="18dp"
+            android:paddingBottom="12dp"
+            tools:listitem="@layout/item_schedule" />
+        <TextView
+            android:id="@+id/tvEmptySchedules"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="24dp"
+            android:text="Chưa có lịch học. Hãy đặt lịch đầu tiên của bạn!"
+            android:textColor="#78849B"
+            android:textSize="15sp"
+            android:visibility="gone" />
+    </FrameLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGoToBookSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginBottom="18dp"
+        android:backgroundTint="#192653"
+        android:text="+ Đặt lịch mới"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 </LinearLayout>
