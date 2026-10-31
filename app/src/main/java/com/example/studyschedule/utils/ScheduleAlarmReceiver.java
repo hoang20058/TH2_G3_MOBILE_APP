@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * ScheduleAlarmReceiver cơ bản trong khung chung (Người 5 phát triển trên nhánh feature/calendar-notifications).
+ * Phụ trách: Người 5 (Minh - nhánh feature/calendar-notifications).
+ * Nhận sự kiện từ AlarmManager khi đến giờ nhắc lịch học sắp diễn ra.
  */
 public class ScheduleAlarmReceiver extends BroadcastReceiver {
     @Override
@@ -14,8 +15,8 @@ public class ScheduleAlarmReceiver extends BroadcastReceiver {
         String message = intent.getStringExtra("message");
         NotificationHelper.sendInstantNotification(
                 context,
-                title != null ? title : "Study Reminder",
-                message != null ? message : "You have an upcoming study session!"
+                title != null ? title : "Upcoming Study Session Reminder",
+                message != null ? message : "Your study session is starting in 15 minutes!"
         );
     }
 }
