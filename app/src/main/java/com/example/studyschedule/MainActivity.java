@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAdminActions() {
-        tvWelcomeUser.setText("Xin chào, " + sessionManager.getUsername() + " (Admin)");
+        tvWelcomeUser.setText(getString(R.string.main_welcome_admin, sessionManager.getUsername()));
         layoutAdminActions.setVisibility(View.VISIBLE);
         layoutStudentActions.setVisibility(View.GONE);
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showStudentActions() {
-        tvWelcomeUser.setText("Xin chào, " + sessionManager.getUsername() + " (Sinh viên)");
+        tvWelcomeUser.setText(getString(R.string.main_welcome_student, sessionManager.getUsername()));
         layoutAdminActions.setVisibility(View.GONE);
         layoutStudentActions.setVisibility(View.VISIBLE);
 
@@ -104,13 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void confirmLogout() {
         new AlertDialog.Builder(this)
-                .setTitle("Đăng xuất")
-                .setMessage("Bạn có chắc chắn muốn đăng xuất?")
-                .setPositiveButton("Đăng xuất", (dialog, which) -> {
+                .setTitle(R.string.logout_confirm_title)
+                .setMessage(R.string.logout_confirm_message)
+                .setPositiveButton(R.string.logout_confirm_title, (dialog, which) -> {
                     sessionManager.logout();
                     goToLogin();
                 })
-                .setNegativeButton("Hủy", null)
+                .setNegativeButton(R.string.action_cancel, null)
                 .show();
     }
 

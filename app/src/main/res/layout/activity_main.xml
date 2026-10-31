@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="24dp">
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="32dp"
-        android:text="Welcome User"
+        tools:text="Welcome User"
         android:textColor="@color/primary_dark"
         android:textSize="22sp"
         android:textStyle="bold" />
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:padding="14dp"
-            android:text="Student Management (Member 2)" />
+            android:text="@string/main_manage_students" />
 
         <Button
             android:id="@+id/btnManageSubjects"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:padding="14dp"
-            android:text="Subject Management (Member 3)" />
+            android:text="@string/main_manage_subjects" />
     </LinearLayout>
 
     <!-- Cụm nút dành cho STUDENT (Người 4 & Người 5) -->
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:padding="14dp"
-            android:text="My Study Schedules (Member 4)" />
+            android:text="@string/main_my_schedules" />
 
         <Button
             android:id="@+id/btnBookSchedule"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:padding="14dp"
-            android:text="Book Study Session (Member 4)" />
+            android:text="@string/main_book_schedule" />
 
         <Button
             android:id="@+id/btnCalendarView"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:padding="14dp"
-            android:text="Calendar &amp; Notifications (Member 5)" />
+            android:text="@string/main_calendar" />
     </LinearLayout>
 
     <Button
@@ -82,6 +82,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/status_cancelled"
         android:padding="12dp"
-        android:text="LOGOUT" />
+        android:text="@string/main_logout" />
 
 </LinearLayout>

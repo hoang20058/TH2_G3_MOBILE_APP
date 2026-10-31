@@ -60,19 +60,19 @@ public class LoginActivity extends AppCompatActivity {
         String password = edtPassword.getText().toString();
 
         if (username.isEmpty()) {
-            edtUsername.setError("Vui lòng nhập tên đăng nhập");
+            edtUsername.setError(getString(R.string.login_error_username_empty));
             edtUsername.requestFocus();
             return;
         }
         if (password.isEmpty()) {
-            edtPassword.setError("Vui lòng nhập mật khẩu");
+            edtPassword.setError(getString(R.string.login_error_password_empty));
             edtPassword.requestFocus();
             return;
         }
 
         Account account = accountDAO.login(username, password);
         if (account == null) {
-            Toast.makeText(this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.login_error_invalid, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -81,17 +81,17 @@ public class LoginActivity extends AppCompatActivity {
         if (Constants.ROLE_STUDENT.equalsIgnoreCase(account.getRole())) {
             Student student = studentDAO.getStudentByAccountId(account.getId());
             if (student == null) {
-                Toast.makeText(this, "Tài khoản chưa được gắn với hồ sơ sinh viên", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.login_error_no_student, Toast.LENGTH_SHORT).show();
                 return;
             }
             studentId = student.getId();
         } else if (!Constants.ROLE_ADMIN.equalsIgnoreCase(account.getRole())) {
-            Toast.makeText(this, "Vai trò tài khoản không hợp lệ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.login_error_invalid_role, Toast.LENGTH_SHORT).show();
             return;
         }
 
         sessionManager.saveLoginSession(account.getId(), studentId, account.getUsername(), account.getRole());
-        Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show();
         goToMain();
     }
 
