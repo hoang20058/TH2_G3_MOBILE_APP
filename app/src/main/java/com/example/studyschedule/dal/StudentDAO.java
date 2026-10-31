@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
 import com.example.studyschedule.models.Student;
 import com.example.studyschedule.utils.Constants;
 import java.util.ArrayList;
@@ -26,10 +30,29 @@ public class StudentDAO {
                 c.getInt(c.getColumnIndexOrThrow("accountId")));
     }
     public Student getStudentByAccountId(int accountId) {
+<<<<<<< HEAD
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        try (Cursor cursor = db.query(DBHelper.TABLE_STUDENT, null,
+                DBHelper.COL_STU_ACCOUNT_ID + " = ?", new String[]{String.valueOf(accountId)},
+                null, null, null)) {
+            if (cursor.moveToFirst()) {
+                return new Student(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_CODE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_FULLNAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_EMAIL)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_PHONE)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.COL_STU_ACCOUNT_ID))
+                );
+            }
+        }
+        return null;
+=======
         try (Cursor c = dbHelper.getReadableDatabase().query("Student", null,
                 "accountId = ?", new String[]{String.valueOf(accountId)}, null, null, null)) {
             return c.moveToFirst() ? read(c) : null;
         }
+>>>>>>> origin/main
     }
     public int getStudentCount() {
         try (Cursor c = dbHelper.getReadableDatabase().rawQuery("SELECT COUNT(*) FROM Student", null)) {

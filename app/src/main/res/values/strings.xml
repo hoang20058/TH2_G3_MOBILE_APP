@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Study Schedule &amp; Booking</string>
+    <string name="action_cancel">Hủy</string>
+
+    <!-- Người 1: Login -->
+    <string name="login_title">STUDY SCHEDULE APP</string>
+    <string name="login_demo_accounts">Demo: admin/123 or sv01/123</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">LOGIN</string>
+    <string name="login_error_username_empty">Vui lòng nhập tên đăng nhập</string>
+    <string name="login_error_password_empty">Vui lòng nhập mật khẩu</string>
+    <string name="login_error_invalid">Sai tên đăng nhập hoặc mật khẩu</string>
+    <string name="login_error_no_student">Tài khoản chưa được gắn với hồ sơ sinh viên</string>
+    <string name="login_error_invalid_role">Vai trò tài khoản không hợp lệ</string>
+    <string name="login_success">Đăng nhập thành công</string>
+
+    <!-- Người 1: MainActivity -->
+    <string name="main_welcome_admin">Xin chào, %1$s (Admin)</string>
+    <string name="main_welcome_student">Xin chào, %1$s (Sinh viên)</string>
+    <string name="main_manage_students">Student Management (Member 2)</string>
+    <string name="main_manage_subjects">Subject Management (Member 3)</string>
+    <string name="main_my_schedules">My Study Schedules (Member 4)</string>
+    <string name="main_book_schedule">Book Study Session (Member 4)</string>
+    <string name="main_calendar">Calendar &amp; Notifications (Member 5)</string>
+    <string name="main_logout">LOGOUT</string>
+    <string name="logout_confirm_title">Đăng xuất</string>
+    <string name="logout_confirm_message">Bạn có chắc chắn muốn đăng xuất?</string>
 </resources>
